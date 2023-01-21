@@ -26,8 +26,65 @@
                 <a href="#" class="hover:text-blue-700">Add</a>
                 <a href="#" class="hover:text-blue-700">Panic</a>
             </div>
+            <!-- Button -->
+            <a href="" class="hidden md:block p-3 px-6 pt-2 text-white bg-red-900 rounded-full baseline hover:bg-red-600">Get Started</a>
         </div>
     </nav>
+
+    <!-- Hero section -->
+    <section id="hero">
+        <!-- Flex Container -->
+        <div class="container flex flex-col-reverse md:flex-row items-center px-6 mx-auto mt-10 space-y-0 md:space-y-0">
+            <!-- Left item -->
+            <div class="flex flex-col mb-32 space-y-12 md:w-1/2">
+                <h1 class="max-w-md text-4xl font-bold text-center md:text-5xl md:text-left">
+                    Some random H1 title
+                </h1>
+                <p class="max-w-sm text-center text-gray-500 md:text-left">
+                    Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis sollicitudin vel magna nec pulvinar. Quisque in ipsum tellus. Nulla facilisi. Cras a commodo libero. 
+                </p>
+                <div class="flex jestify-center md:justify-start">
+                    <a href="" class="p-3 px-6 pt-2 text-white bg-red-900 rounded-full baseline hover:bg-red-600">Get Started</a>
+                </div>
+            </div>
+            <!-- Image -->
+            <div class="md:w-1/2">
+                <img src="{{url_for('static',filename='img/illustration-intro.svg')}}" alt="">
+            </div> 
+        </div>
+    </section>
+
+    <!-- Features section-->
+    <section id="features">
+        <!-- flex container -->
+        <div class="container flex flex-col px-4 mx-auto mt-10 space-y-12 md:space-y-0 md:flex-row">
+            <div class="flex-col space-y-12 md:w-1/2">
+                <h2 class="max-w-md text-4xl font-bold text-center md:text-left">
+                    This is a h2 tag title
+                </h2>
+                <p class="max-w-sm text-center text-gray-600 md:text-left">
+                    In lorem mauris, commodo vel venenatis vel, efficitur eget ex. Praesent eros nibh, tempor in tincidunt vitae, faucibus ac lectus. Cras ullamcorper turpis ac enim consectetur condimentum.
+                </p>
+            </div>
+
+            <!-- List items -->
+            <div class="flex flex-col space-y-8 md:w-1/2">
+                <!-- List item 1 -->
+                <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+                    <!-- Heading -->
+                    <div class="rounded-l-full bg-red-100 md:bg-transparent">
+                        <div class="flex items-center space-x-2">
+                            <div class="px-4 py-2 text-white rounded-full md:py-1 bg-red-500">01</div>
+                            <h3 class="text-base font-bold md:mb-4">
+                                again some random titlt thing
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js"></script>
 </body>
 
