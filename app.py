@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from datetime import datetime
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -12,12 +13,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] =\
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # init database
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # Create database model
 class Sensors(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(200), nullable=False)
 	type = db.Column(db.String(200), nullable=False)
+	brand = db.Column(db.String(200), nullable=True)
+	address = db.Column(db.Integer, nullable=False)
 	date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
 @app.route('/')
@@ -33,7 +37,9 @@ def sensors():
 	if request.method == 'POST':
 		sensor_name = request.form['sensor_name']
 		sensor_type = request.form['sensor_type']
-		new_sensor = Sensors(name=sensor_name, type=sensor_type)
+		sensor_brand = request.form['sensor_brand']
+		sensor_adress = request.form['sensor_adress']
+		new_sensor = Sensors(name=sensor_name, type=sensor_type, brand=sensor_brand, address=sensor_adress)
 
 		# push to database
 		try:
