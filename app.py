@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -20,29 +20,57 @@ class Sensors(db.Model):
 	type = db.Column(db.String(200), nullable=False)
 	date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
-	# # Create return fn
-	# def __repr__(self):
-	# 	return '<Name %r>' % self.id
-
-@app.route("/")
-@app.route("/index")
+@app.route('/')
+@app.route('/index')
 def index():
-	title = "Dashboard"
-	return render_template("index.html", title=title)
+	title = 'Dashboard'
+	return render_template('index.html', title=title)
 
-@app.route("/sensors")
+@app.route('/sensors', methods=['POST', 'GET'])
 def sensors():
-	title = "Sensors"
-	return render_template("sensors.html", title=title)
+	title = 'Sensors'
 
-@app.route("/addsensor", methods=["POST"])
-def sensor():
-	sensor_id = request.form.get("sensor_id")
-	sensor_type = request.form.get("sensor_type")
-	sensor_name = request.form.get("sensor_name")
+	if request.method == 'POST':
+		sensor_name = request.form['sensor_name']
+		sensor_type = request.form['sensor_type']
+		new_sensor = Sensors(name=sensor_name, type=sensor_type)
 
-	title = "Sensor added"
-	return render_template("addsensor.html", title=title)
+		# push to database
+		try:
+			db.session.add(new_sensor)
+			db.session.commit()
+			return redirect('/sensors')
+		except:
+			return "Error"
+
+	else:
+		sensors = Sensors.query.order_by(Sensors.date_created)
+		return render_template('sensors.html', title=title, sensors=sensors)
+
+@app.route('/update_sensor/<int:id>', methods=['POST', 'GET'])
+def update_sensor(id):
+	sensor_to_update = Sensors.query.get_or_404(id)
+
+	if request.method == 'POST':
+		sensor_to_update.name = request.form['sensor_name']
+		try:
+			db.session.commit()
+			return redirect('/sensors')
+		except:
+			return 'error updating'
+	else:
+		return render_template('update_sensor.html', sensor_to_update=sensor_to_update)
+
+@app.route('/delete_sensor/<int:id>')
+def delete_sensor(id):
+	sensors_to_delete = Sensors.query.get_or_404(id)
+
+	try:
+		db.session.delete(sensors_to_delete)
+		db.session.commit()
+		return redirect('/sensors')
+	except:
+		return 'delete error'
 
 if __name__ == '__main__':
 	app.run(debug=True)
