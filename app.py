@@ -35,5 +35,14 @@ def sensors():
 	title = "Sensors"
 	return render_template("sensors.html", title=title)
 
+@app.route("/addsensor", methods=["POST"])
+def sensor():
+	sensor_id = request.form.get("sensor_id")
+	sensor_type = request.form.get("sensor_type")
+	sensor_name = request.form.get("sensor_name")
+
+	title = "Sensor added"
+	return render_template("addsensor.html", title=title)
+
 if __name__ == '__main__':
 	app.run(debug=True)
