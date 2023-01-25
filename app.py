@@ -1,13 +1,17 @@
 import os
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
 
+# set base dir
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-
 app = Flask(__name__)
+# Setup config key
+app.config['SECRET_KEY'] = 'a super random key'
+
+# Setup database connection
 app.config['SQLALCHEMY_DATABASE_URI'] =\
         'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -35,6 +39,7 @@ def sensors():
 	title = 'Sensors'
 
 	if request.method == 'POST':
+		flash("Form submitted")
 		sensor_name = request.form['sensor_name']
 		sensor_type = request.form['sensor_type']
 		sensor_brand = request.form['sensor_brand']

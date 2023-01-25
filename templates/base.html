@@ -28,17 +28,18 @@
         <!-- Menu items -->
         <div class="hidden md:flex space-x-6 ">
             <a href="{{ url_for('index') }}" class="hover:text-blue-700">Home</a>
-            <a href="{{ url_for('sensors') }}" class="hover:text-blue-700">Settings</a>
-            <a href="#" class="hover:text-blue-700">Add</a>
-            <a href="#" class="hover:text-blue-700">Panic</a>
+            <a href="{{ url_for('sensors') }}" class="hover:text-blue-700">Add</a>
+            <a href="#" class="hover:text-blue-700">Settings</a>
         </div>
         <!-- Button -->
         <a href="" class="hidden md:block p-3 px-6 pt-2 text-white bg-red-900 rounded-full baseline hover:bg-red-600">Get Started</a>
     </div>
 </nav>
 
-{% block content %}
-{% endblock %}
+<div class="relative container mx-auto">
+    {% block content %}
+    {% endblock %}
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js"></script>
 </body>
