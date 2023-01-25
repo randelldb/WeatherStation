@@ -26,6 +26,7 @@ class Sensors(db.Model):
 	type = db.Column(db.String(200), nullable=False)
 	brand = db.Column(db.String(200), nullable=True)
 	address = db.Column(db.Integer, nullable=False)
+	displayed = db.Column(db.Integer, default=0)
 	date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
 ### Index ###
@@ -44,7 +45,8 @@ def sensors():
 		sensor_type = request.form['sensor_type']
 		sensor_brand = request.form['sensor_brand']
 		sensor_adress = request.form['sensor_adress']
-		new_sensor = Sensors(name=sensor_name, type=sensor_type, brand=sensor_brand, address=sensor_adress)
+		displayed = request.form['displayed']
+		new_sensor = Sensors(name=sensor_name, type=sensor_type, brand=sensor_brand, address=sensor_adress, displayed=displayed)
 
 		# push to database
 		try:
@@ -65,6 +67,10 @@ def update_sensor(id):
 	sensor_to_update = Sensors.query.get_or_404(id)
 	if request.method == 'POST':
 		sensor_to_update.name = request.form['sensor_name']
+		sensor_to_update.type = request.form['sensor_type']
+		sensor_to_update.brand = request.form['sensor_brand']
+		sensor_to_update.adress = request.form['sensor_adress']
+		sensor_to_update.displayed = request.form['displayed']
 		try:
 			db.session.commit()
 			flash("Sensor data is updated!")
